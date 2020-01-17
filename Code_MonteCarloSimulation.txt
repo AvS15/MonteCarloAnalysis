@@ -1,0 +1,45 @@
+
+Sub MonteCarlo()
+
+    
+        Dim n, z
+        Dim UGA_Mw, UGA_Sd, Mat_Mw, Mat_Sd, Betreu_Mw, Betreu_Sd
+    
+    
+        UGA_Mw = Range("UGA_Mw")
+        UGA_Sd = Range("UGA_Sd")
+        Mat_Mw = Range("Mat_Mw")
+        Mat_Sd = Range("Mat_Sd")
+        Betreu_Mw = Range("Betreu_Mw")
+        Betreu_Sd = Range("Betreu_Sd")
+        n = Range("Ziehanzahl")
+
+
+        Range("D30:G1030").ClearContents
+    
+    
+        For z = 1 To n
+            Cells(10, 4) = z
+    
+            Sheets("Forecast").Range("E13") = Application.NormInv(Rnd, Mat_Mw, Mat_Sd)
+        
+            Sheets("Forecast").Range("E9") = Application.NormInv(Rnd, UGA_Mw, UGA_Sd)
+    
+            Sheets("Forecast").Range("E16") = Application.NormInv(Rnd, Betreu_Mw, Betreu_Sd)
+
+            Cells(29 + z, 4) = Sheets("Forecast").Range("E13")
+            Cells(29 + z, 5) = Sheets("Forecast").Range("E9")
+            Cells(29 + z, 6) = Sheets("Forecast").Range("E16")
+            Cells(29 + z, 7) = Sheets("Forecast").Range("O8")
+        
+            Application.Wait Second(0.0001)
+            
+         Next z
+
+
+
+        Sheets("Forecast").Range("E13") = Sheets("MonteCarlo").Range("D6")
+        Sheets("Forecast").Range("E9") = Sheets("MonteCarlo").Range("D7")
+        Sheets("Forecast").Range("E16") = Sheets("MonteCarlo").Range("D8")
+    
+End Sub
